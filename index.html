@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+
+    body {
+      background: #F6F7F8;
+      padding: 20px;
+      font-family: "Manrope", sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+    
+    h3 {
+      font-size: 24px;
+    }
+
+    h4 {
+      font-size: 20px;
+    }
+
+    span {
+      font-size: 12px;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      z-index: 1;
+
+
+      background-color: #FFFFFF;
+      color: #072635;
+      padding: 15px 0;
+      border-radius: 25px;
+      margin-bottom: 20px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+    }
+
+    .menu {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu a {
+      display: block;
+      padding: 7px 15px;
+      font-size: 17px;
+      font-weight: 500;
+      transition: 0.2s all ease-in-out;
+    }
+
+    .menu:hover a {
+      opacity: 0.4;
+    }
+
+    .menu a:hover {
+      opacity: 1;
+    }
+
+    .menu-icon {
+      display: none;
+    }
+
+    #menu-toggle {
+      display: none;
+    }
+
+    #menu-toggle:checked~.menu {
+      transform: scale(1, 1);
+    }
+
+    @media only screen and (max-width: 950px) {
+      .menu {
+        flex-direction: column;
+        background-color: #FFFFFF;
+        align-items: start;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        z-index: 1;
+        transform: scale(1, 0);
+        transform-origin: top;
+        transition: transform 0.3s ease-in-out;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+      }
+
+      .menu a {
+        margin-left: 12px;
+      }
+
+      .menu li {
+        margin-bottom: 10px;
+      }
+
+      .menu-icon {
+        display: block;
+        color: #000000;
+        font-size: 28px;
+        cursor: pointer;
+      }
+    }
+
+    .flex {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .aside {
+      width: 25%;
+      background-color: #FFFFFF;
+      color: #072635;
+      padding: 30px;
+      border-radius: 25px;
+    }
+
+    nav ul {
+      list-style-type: none;
+    }
+
+    nav ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #072635;
+      font-weight: normal;
+      font-size: 14px;
+    }
+
+    .sub-heading {
+      text-align: left;
+    }
+
+    #lab-result,
+    #patient-section ul li {
+      list-style-type: none;
+      padding: 15px;
+    }
+
+    .list-active {
+      background: #D8FCF7;
+    }
+
+    .user-info {
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info button {
+      background-color: transparent;
+      border: 0;
+    }
+
+    .avatar {
+      vertical-align: middle;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+
+    .vl {
+      border-left: 1px solid #000000;
+      height: 100%;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      /* padding: 10px; */
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .grid-sub-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .grid-item {
+      background-color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      text-align: center;
+      border-radius: 25px;
+    }
+
+    .item2 {
+      grid-row: 1 / span 2;
+    }
+
+    .item1 {
+      grid-row: 2;
+    }
+
+    .grid-sub-item {
+      padding: 20px;
+      text-align: left;
+      border-radius: 25px;
+    }
+
+    .btn-success {
+      border-radius: 41px;
+      background: #01F0D0;
+      border: 0;
+      width: 100%;
+      padding: 12px 0;
+      font-weight: 500;
+      font-size: 15px;
+      margin-top: 1rem;
+    }
+
+    .chart-statistic {
+      background: #F4F0FE;
+      padding: 20px;
+      text-align: left;
+      border-radius: 25px;
+      margin: 20px 0;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+      text-align: left;
+      font-size: 12px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      padding: 10px;
+      color: #000000;
+    }
+
+    th,
+    td {
+      padding: 12px;
+    }
+
+    th:nth-child(1) {
+      border-top-left-radius: 25px;
+      border-bottom-left-radius: 25px;
+    }
+
+    th:nth-child(3) {
+      border-top-right-radius: 25px;
+      border-bottom-right-radius: 25px;
+    }
+
+    button {
+      cursor: pointer;
+      background: transparent;
+      border: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <nav>
+      <div>
+        <img src="TestLogo.svg" width="150">
+      </div>
+      <input type="checkbox" id="menu-toggle">
+      <label for="menu-toggle" class="menu-icon">&#9776;</label>
+      <ul class="menu">
+        <li>
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512">
+              <title>ionicons-v5-i</title>
+              <path
+                d="M80,212V448a16,16,0,0,0,16,16h96V328a24,24,0,0,1,24-24h80a24,24,0,0,1,24,24V464h96a16,16,0,0,0,16-16V212"
+                style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" />
+              <path d="M480,256,266.89,52c-5-5.28-16.69-5.34-21.78,0L32,256"
+                style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" />
+              <polyline points="400 179 400 64 352 64 352 133"
+                style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" />
+            </svg>
+            Overview
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-people"
+              viewBox="0 0 16 16">
+              <path
+                d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+            </svg>
+            Patients
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 448 512">
+              <path
+                d="M152 24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H64C28.7 64 0 92.7 0 128v16 48V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V192 144 128c0-35.3-28.7-64-64-64H344V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V64H152V24zM48 192H400V448c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192z" />
+            </svg>
+            Schedule
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+              <defs>
+                <style>
+                  .cls-1 {
+                    fill: #231f20;
+                  }
+
+                  .cls-2 {
+                    fill: none;
+                    opacity: 0;
+                  }
+                </style>
+              </defs>
+              <title>message-circle</title>
+              <g id="Layer_2" data-name="Layer 2">
+                <g id="message-circle">
+                  <g id="message-circle-2" data-name="message-circle">
+                    <circle class="cls-1" cx="12" cy="12" r="1" />
+                    <circle class="cls-1" cx="16" cy="12" r="1" />
+                    <circle class="cls-1" cx="8" cy="12" r="1" />
+                    <path class="cls-1"
+                      d="M19.07,4.93a10,10,0,0,0-16.28,11,1.06,1.06,0,0,1,.09.64L2,20.8a1,1,0,0,0,.27.91A1,1,0,0,0,3,22l.2,0,4.28-.86a1.26,1.26,0,0,1,.64.09,10,10,0,0,0,11-16.28Zm.83,8.36a8,8,0,0,1-11,6.08,3.26,3.26,0,0,0-1.25-.26,3.43,3.43,0,0,0-.56.05l-2.82.57.57-2.82a3.09,3.09,0,0,0-.21-1.81,8,8,0,0,1,6.08-11h0a8,8,0,0,1,9.19,9.19Z" />
+                    <rect class="cls-2" width="24" height="24" />
+                  </g>
+                </g>
+              </g>
+            </svg>
+            Message
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+              <g>
+                <path fill="none" d="M0 0h24v24H0z" />
+                <path
+                  d="M18 7h3a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h15v4zM4 9v10h16V9H4zm0-4v2h12V5H4zm11 8h3v2h-3v-2z" />
+              </g>
+            </svg>
+            Transaction
+          </a>
+        </li>
+      </ul>
+      <div class="user-info">
+        <img
+          src="https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=338&ext=jpg&ga=GA1.1.2113030492.1719964800&semt=sph"
+          alt="Avatar" class="avatar">
+        <div>
+          <h5>Dr. Jose Simons</h5>
+          <span>General Practioner</span>
+        </div>
+        <div class="vl"></div>
+        <div>
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512">
+              <title>ionicons-v5-q</title>
+              <path
+                d="M262.29,192.31a64,64,0,1,0,57.4,57.4A64.13,64.13,0,0,0,262.29,192.31ZM416.39,256a154.34,154.34,0,0,1-1.53,20.79l45.21,35.46A10.81,10.81,0,0,1,462.52,326l-42.77,74a10.81,10.81,0,0,1-13.14,4.59l-44.9-18.08a16.11,16.11,0,0,0-15.17,1.75A164.48,164.48,0,0,1,325,400.8a15.94,15.94,0,0,0-8.82,12.14l-6.73,47.89A11.08,11.08,0,0,1,298.77,470H213.23a11.11,11.11,0,0,1-10.69-8.87l-6.72-47.82a16.07,16.07,0,0,0-9-12.22,155.3,155.3,0,0,1-21.46-12.57,16,16,0,0,0-15.11-1.71l-44.89,18.07a10.81,10.81,0,0,1-13.14-4.58l-42.77-74a10.8,10.8,0,0,1,2.45-13.75l38.21-30a16.05,16.05,0,0,0,6-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16,16,0,0,0-6.07-13.94l-38.19-30A10.81,10.81,0,0,1,49.48,186l42.77-74a10.81,10.81,0,0,1,13.14-4.59l44.9,18.08a16.11,16.11,0,0,0,15.17-1.75A164.48,164.48,0,0,1,187,111.2a15.94,15.94,0,0,0,8.82-12.14l6.73-47.89A11.08,11.08,0,0,1,213.23,42h85.54a11.11,11.11,0,0,1,10.69,8.87l6.72,47.82a16.07,16.07,0,0,0,9,12.22,155.3,155.3,0,0,1,21.46,12.57,16,16,0,0,0,15.11,1.71l44.89-18.07a10.81,10.81,0,0,1,13.14,4.58l42.77,74a10.8,10.8,0,0,1-2.45,13.75l-38.21,30a16.05,16.05,0,0,0-6.05,14.08C416.17,247.67,416.39,251.83,416.39,256Z"
+                style="fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px" />
+            </svg>
+          </button>
+          <button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 128 512">
+              <path
+                d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="grid-container">
+    <div class="grid-item">
+      <div class="grid-item item2" id="patient-section">
+        <aside>
+          <div class="flex">
+            <h4 class="sub-heading">Patients</h4>
+            <button>
+              <span><img src="search_FILL0_wght300_GRAD0_opsz24.svg" alt=""></span>
+            </button>
+          </div>
+          <br>
+          <ul>
+            <li>
+              <div class="flex">
+                <div class="user-info">
+                  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    alt="Avatar" class="avatar">
+                  <div>
+                    <h5>Emily Williams</h5>
+                    <span>Female, 18</span>
+                  </div>
+                </div>
+                <button>
+                  <span><img src="more_horiz_FILL0_wght300_GRAD0_opsz24.svg" alt=""></span>
+                </button>
+              </div>
+            </li>
+            <li class="list-active">
+              <div class="flex">
+                <div class="user-info">
+                  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    alt="Avatar" class="avatar">
+                  <div>
+                    <h5>Jessica Taylor</h5>
+                    <span>Female, 28</span>
+                  </div>
+                </div>
+                <button>
+                  <span><img src="more_horiz_FILL0_wght300_GRAD0_opsz24.svg" alt=""></span>
+                </button>
+              </div>
+            </li>
+            <li>
+              <div class="flex">
+                <div class="user-info">
+                  <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                    alt="Avatar" class="avatar">
+                  <div>
+                    <h5>Brandon Mitchel</h5>
+                    <span>Male, 36</span>
+                  </div>
+                </div>
+                <button>
+                  <span><img src="more_horiz_FILL0_wght300_GRAD0_opsz24.svg" alt=""></span>
+                </button>
+              </div>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="grid-item">
+        <div class="flex">
+          <h4 class="sub-heading">Diagnosis History</h4>
+          <button>
+            <span><img src="search_FILL0_wght300_GRAD0_opsz24.svg" alt=""></span>
+          </button>
+        </div>
+        <div class="chart-statistic">
+          <h5>Blood Pressure</h5>
+          <div>
+            <canvas id="myChart" style="width:100%; height: 300px"></canvas>
+          </div>
+        </div>
+        <div class="grid-sub-container">
+          <div class="grid-sub-item" style="background:#E0F3FA">
+            <img src="respiratory rate.svg" width="60" alt="">
+            <p>Respiratory Rate</p>
+            <h4 id="respiratory-rate-value">20 bpm</h4>
+            <small id="respiratory-rate-level">Normal</small>
+          </div>
+          <div class="grid-sub-item" style="background:#FFE6E9">
+            <img src="temperature.svg" width="60" alt="">
+            <p>Temperature</p>
+            <h4 id="temperature-value">98.6°F</h4>
+            <small id="temperature-level">Normal</small>
+          </div>
+          <div class="grid-sub-item" style="background:#FFE6F1">
+            <img src="HeartBPM.svg" width="60" alt="">
+            <p>Heart Rate</p>
+            <h4 id="heart-rate-value">78 bpm</h4>
+            <small>
+              <span id="heart-rate-level"><img src="ArrowDown.svg" alt=""></span>
+              Lower than Aver
+            </small>
+          </div>
+        </div>
+      </div>
+      <div class="grid-item item1">
+        <section>
+          <h4 class="sub-heading">Diagnostic List</h4>
+          <div style="overflow-x:auto;">
+            <table>
+              <tr>
+                <th>Problem/Diagnosis</th>
+                <th>Description</th>
+                <th>Status</th>
+              </tr>
+              <tr>
+              </tr>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="grid-item">
+      <div class="grid-item">
+        <aside>
+          <div>
+            <img width="200" id="detail-profile-picture"
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Avatar"
+              style="border-radius: 50%;">
+            <h3 id="detail-full-name">Jessica Taylor</h3>
+          </div>
+          <br>
+          <div class="user-info">
+            <img src="BirthIcon.svg" alt="Avatar" class="avatar">
+            <div>
+              <span>Date of Birth</span>
+              <h5 id="detail-birthday">August 23, 1996</h5>
+            </div>
+          </div>
+          <br>
+          <div class="user-info">
+            <img src="FemaleIcon.svg" alt="Avatar" class="avatar">
+            <div>
+              <span>Gender</span>
+              <h5 id="detail-gender">Female</h5>
+            </div>
+          </div>
+          <br>
+          <div class="user-info">
+            <img src="PhoneIcon.svg" alt="Avatar" class="avatar">
+            <div>
+              <span>Contact Info.</span>
+              <h5 id="detail-contact-info">(415) 555-5678</h5>
+            </div>
+          </div>
+          <br>
+          <div class="user-info">
+            <img src="PhoneIcon.svg" alt="Avatar" class="avatar">
+            <div>
+              <span>Emergency Contact</span>
+              <h5 id="detail-emergency-contact">(415) 555-5678</h5>
+            </div>
+          </div>
+          <br>
+          <div class="user-info">
+            <img src="InsuranceIcon.svg" alt="Avatar" class="avatar">
+            <div>
+              <span>Insurance Provider</span>
+              <h5 id="detail-insurance-provider">Sunrise Health Assurance</h5>
+            </div>
+          </div>
+          <button class="btn-success">Show All Information</button>
+        </aside>
+      </div>
+      <div class="grid-item item1">
+        <section>
+          <h4 class="sub-heading">Lab Results</h4>
+          <ul id="lab-result">
+            <li style="margin-bottom: 15px;">
+              <div class="flex">
+                <h5>Blood Tests</h5>
+                <span><img src="download_FILL0_wght300_GRAD0_opsz24 (1).svg" alt=""></span>
+              </div>
+            </li>
+            <li style="margin-bottom: 15px;">
+              <div class="flex">
+                <h5>Blood Tests</h5>
+                <span><img src="download_FILL0_wght300_GRAD0_opsz24 (1).svg" alt=""></span>
+              </div>
+            </li>
+            <li style="margin-bottom: 15px;">
+              <div class="flex">
+                <h5>Blood Tests</h5>
+                <span><img src="download_FILL0_wght300_GRAD0_opsz24 (1).svg" alt=""></span>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+  <footer></footer>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
