@@ -38,7 +38,6 @@ $(document).ready(function () {
       $('#detail-emergency-contact').text(userData.emergency_contact);
       $('#detail-insurance-provider').text(userData.insurance_type);
 
-      console.log(userData);
       $('#lab-result').empty();
 
       // Loop through the lab results and create list items
@@ -94,26 +93,28 @@ $(document).ready(function () {
             }
           ]
         },
-      });
-
-      function clickHandler(evt) {
-        const points = myChart.getElementsAtEventForMode(evt, 'nearest', {
-          intersect: true
-        }, true);
-        if (points.length) {
-          const firstPoint = points[0];
-          var label = myChart.data.labels[firstPoint.index];
-          var value = myChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-          // Check the value range for the x-axis (label index)
-          console.log(myChart.data);
-          if (-1 < firstPoint.index && firstPoint.index < myChart.data.labels.length) {
-            alert("You clicked me!");
+        options: {
+          onClick: (event, elements) => {
+              if (elements.length > 0) {
+                const index = elements[0].index;
+                $('#respiratory-rate-value').text(`${userData.diagnosis_history[index].respiratory_rate.value} bpm`);
+                $('#respiratory-rate-level').text(userData.diagnosis_history[index].respiratory_rate.levels);
+                $('#temperature-value').text(`${userData.diagnosis_history[index].temperature.value}°F`);
+                $('#temperature-level').text(userData.diagnosis_history[index].temperature.levels);
+                $('#heart-rate-value').text(`${userData.diagnosis_history[index].heart_rate.value} bpm`);
+                $('#heart-rate-level').text(userData.diagnosis_history[index].heart_rate.levels);
+                // $('#detail-insurance-provider').text(userData.insurance_type);
+              }
+          },
+          onHover: (event, chartElement) => {
+              if (chartElement.length) {
+                  event.native.target.style.cursor = 'pointer';
+              } else {
+                  event.native.target.style.cursor = 'default';
+              }
           }
-        }
-      }
-
-      // Attach the click handler to the canvas
-      document.getElementById('myChart').onclick = clickHandler;
+        },
+      });
     },
     error: function (xhr, status, error) {
       console.warn(xhr, status, error);
