@@ -24,7 +24,7 @@
     h1 {
       font-size: 1.5rem;
     }
-    
+
     h3 {
       font-size: 24px;
     }
@@ -64,7 +64,7 @@
 
     .menu a {
       display: block;
-        font-size: 12px;
+      font-size: 12px;
       font-weight: 500;
       transition: 0.2s all ease-in-out;
     }
@@ -191,9 +191,9 @@
     .grid-container {
       display: grid;
       grid-template-columns: auto auto auto;
-      /* padding: 10px; */
       gap: 20px;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      /* grid-template-columns: repeat(4, 1fr); */
     }
 
     .grid-sub-container {
@@ -209,15 +209,7 @@
       text-align: center;
       border-radius: 25px;
     }
-
-    .item2 {
-      grid-row: 1 / span 2;
-    }
-
-    .item1 {
-      grid-row: 2;
-    }
-
+    
     .grid-sub-item {
       padding: 20px;
       text-align: left;
@@ -398,7 +390,7 @@
   </header>
   <div class="grid-container">
     <div class="grid-item">
-      <div class="grid-item item2" id="patient-section">
+      <div class="grid-item" id="patient-section">
         <aside>
           <div class="flex">
             <h4 class="sub-heading">Patients</h4>
@@ -457,7 +449,7 @@
         </aside>
       </div>
     </div>
-    <div class="grid-item">
+    <div class="grid-item" style="grid-column: span 2">
       <div class="grid-item">
         <div class="flex">
           <h4 class="sub-heading">Diagnosis History</h4>
@@ -475,27 +467,27 @@
           <div class="grid-sub-item" style="background:#E0F3FA">
             <img src="respiratory rate.svg" width="60" alt="">
             <p>Respiratory Rate</p>
-            <h4 id="respiratory-rate-value">20 bpm</h4>
-            <small id="respiratory-rate-level">Normal</small>
+            <h4 id="respiratory-rate-value">0 bpm</h4>
+            <small id="respiratory-rate-level">-</small>
           </div>
           <div class="grid-sub-item" style="background:#FFE6E9">
             <img src="temperature.svg" width="60" alt="">
             <p>Temperature</p>
-            <h4 id="temperature-value">98.6°F</h4>
-            <small id="temperature-level">Normal</small>
+            <h4 id="temperature-value">0°F</h4>
+            <small id="temperature-level">-</small>
           </div>
           <div class="grid-sub-item" style="background:#FFE6F1">
             <img src="HeartBPM.svg" width="60" alt="">
             <p>Heart Rate</p>
-            <h4 id="heart-rate-value">78 bpm</h4>
-            <small>
-              <span id="heart-rate-level"><img src="ArrowDown.svg" alt=""></span>
-              Lower than Aver
+            <h4 id="heart-rate-value">0 bpm</h4>
+            <small id="heart-rate-level">
+              <span><img src="ArrowDown.svg" alt=""></span>
+              -
             </small>
           </div>
         </div>
       </div>
-      <div class="grid-item item1">
+      <div class="grid-item">
         <section>
           <h4 class="sub-heading">Diagnostic List</h4>
           <div style="overflow-x:auto;">
@@ -564,7 +556,7 @@
           <button class="btn-success">Show All Information</button>
         </aside>
       </div>
-      <div class="grid-item item1">
+      <div class="grid-item">
         <section>
           <h4 class="sub-heading">Lab Results</h4>
           <ul id="lab-result">
@@ -595,5 +587,4 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
 </body>
-
 </html>
